@@ -9,7 +9,7 @@ public class FlipActionData : WeaponActionData
 
     public override IEnumerator Execute(WeaponController weapon, HeroStats stats)
     {
-        float duration = BaseDuration / stats.AttackSpeed.Value;
+        float duration = BaseDuration / stats.AttackSpeed;
         float elapsed = 0f;
 
         // Ensure hitbox is OFF during a flip

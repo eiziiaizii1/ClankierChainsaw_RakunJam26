@@ -12,14 +12,14 @@ public class SweepActionData : WeaponActionData
     public override IEnumerator Execute(WeaponController weapon, HeroStats stats)
     {
         // Calculate modified duration based on Attack Speed
-        float duration = BaseDuration / stats.AttackSpeed.Value;
+        float duration = BaseDuration / stats.AttackSpeed;
         float elapsed = 0f;
 
         Quaternion startRotation = weapon.WeaponPivot.localRotation;
         Quaternion endRotation = startRotation * Quaternion.Euler(0, 0, Angle * Direction);
 
         // Turn ON the hitbox to deal damage
-        weapon.Hitbox.EnableHitbox(stats.Damage.Value * DamageMultiplier);
+        weapon.Hitbox.EnableHitbox(stats.Damage * DamageMultiplier);
 
         while (elapsed < duration)
         {

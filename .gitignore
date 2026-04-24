@@ -105,3 +105,9 @@ InitTestScene*.unity*
 
 # Auto-generated scenes by play mode tests
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
+
+# Ignored custom plugins and tools
+/[Aa]ssets/Plugins/Better Hierarchy/
+/[Aa]ssets/Plugins/Better Hierarchy.meta
+/[Pp]ackages/com.singularitygroup.hotreload
+

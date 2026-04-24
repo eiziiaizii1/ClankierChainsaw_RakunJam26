@@ -12,7 +12,6 @@ namespace AzizStuff
         [Header("References")]
         [SerializeField] Transform target;
         [SerializeField] WaveSequenceSO sequence;
-        [SerializeField] WaveEventChannelSO waveCompletedChannel;
 
         [Header("Spawn Ring")]
         [Tooltip("Distance from target at which enemies spawn. Set just outside camera view.")]
@@ -98,9 +97,6 @@ namespace AzizStuff
 
                 var wave = waves[waveIndex];
                 if (wave != null) yield return RunWave(wave);
-
-                if (waveCompletedChannel != null) waveCompletedChannel.Raise(waveIndex);
-                Debug.Log($"Wave {waveIndex + 1} complete. Upgrade event triggered.");
 
                 if (sequence.pauseBetweenWaves > 0f)
                     yield return new WaitForSeconds(sequence.pauseBetweenWaves);

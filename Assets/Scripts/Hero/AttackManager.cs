@@ -21,23 +21,46 @@ public class AttackManager : MonoBehaviour
 
     private void Update()
     {
-        // Example input logic: 
-        // Press 1 for first attack, 2 for second attack
-        if (Input.GetKeyDown(KeyCode.Alpha1) && AvailableActions.Count > 0)
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            TryPerformAction(AvailableActions[0]);
+            TryPerformAction(0);
         }
-        else if (Input.GetKeyDown(KeyCode.Alpha2) && AvailableActions.Count > 1)
+        else if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            TryPerformAction(AvailableActions[1]);
+            TryPerformAction(1);
         }
+        else if (Input.GetKeyDown(KeyCode.Alpha3))
+        {   
+            TryPerformAction(2);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            TryPerformAction(3);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            TryPerformAction(4);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            TryPerformAction(5);
+        }
+        else if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            TryPerformAction(6);
+        }   
     }
-
-    public void TryPerformAction(WeaponActionData actionData)
+    
+    public void TryPerformAction(int attackID)
     {
-        if (actionData != null && weaponController != null && !weaponController.IsAttacking)
-        {
-            weaponController.PerformAction(actionData, hero.Stats);
-        }
+        if (attackID < 0 || attackID >= AvailableActions.Count || 
+            AvailableActions[attackID] == null || 
+            weaponController == null || 
+            weaponController.IsAttacking) {
+                Debug.Log("Invalid attack attempt");
+                return;
+            }
+        
+        weaponController.PerformAction(AvailableActions[attackID], hero.Stats);
     }
 }

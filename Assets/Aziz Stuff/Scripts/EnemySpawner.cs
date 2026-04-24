@@ -122,27 +122,43 @@ namespace AzizStuff
         {
             float interval = 60f / entry.spawnsPerMinute;
             var wait = new WaitForSeconds(interval);
-            for (int i = 0; i < entry.count; i++)
+
+            int groupMin = Mathf.Max(1, entry.groupSizeMin);
+            int groupMax = Mathf.Max(groupMin, entry.groupSizeMax);
+            float halfSpreadRad = Mathf.Max(0f, entry.angleSpreadDegrees) * Mathf.Deg2Rad * 0.5f;
+
+            int remaining = entry.count;
+            while (remaining > 0)
             {
-                Spawn(entry.enemyPrefab);
-                if (i < entry.count - 1) yield return wait;
+                int groupSize = URandom.Range(groupMin, groupMax + 1);
+                if (groupSize > remaining) groupSize = remaining;
+
+                float centerAngle = URandom.value * Mathf.PI * 2f;
+                for (int i = 0; i < groupSize; i++)
+                {
+                    float offset = halfSpreadRad > 0f ? URandom.Range(-halfSpreadRad, halfSpreadRad) : 0f;
+                    Spawn(entry.enemyPrefab, centerAngle + offset);
+                }
+
+                remaining -= groupSize;
+                if (remaining > 0) yield return wait;
             }
+
             onComplete?.Invoke();
         }
 
-        void Spawn(GameObject prefab)
+        void Spawn(GameObject prefab, float angleRadians)
         {
             if (!_pools.TryGetValue(prefab, out var pool)) return;
             var enemy = pool.Get();
 
-            float angle = URandom.value * Mathf.PI * 2f;
             float r = radiusJitter > 0f
                 ? spawnRadius + URandom.Range(-radiusJitter, radiusJitter)
                 : spawnRadius;
 
             Vector3 center = target.position;
             enemy.transform.SetPositionAndRotation(
-                new Vector3(center.x + Mathf.Cos(angle) * r, center.y + Mathf.Sin(angle) * r, center.z),
+                new Vector3(center.x + Mathf.Cos(angleRadians) * r, center.y + Mathf.Sin(angleRadians) * r, center.z),
                 Quaternion.identity
             );
 

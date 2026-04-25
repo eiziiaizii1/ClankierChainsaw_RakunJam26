@@ -1531,6 +1531,67 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 697321352}
   m_CullTransparentMesh: 1
+--- !u!1001 &751308946
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 112.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1031.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1859088980872498262, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7117387848258876872, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: target
+      value: 
+      objectReference: {fileID: 1319325565}
+    - target: {fileID: 7782505561019853232, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
+      propertyPath: m_Name
+      value: EnemySpawner
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ff06ecd12e33fa6438c442d26b012f72, type: 3}
 --- !u!1001 &754816673
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3316,6 +3377,7 @@ GameObject:
   - component: {fileID: 1319325566}
   - component: {fileID: 1319325568}
   - component: {fileID: 1319325569}
+  - component: {fileID: 1319325570}
   m_Layer: 0
   m_Name: Hero
   m_TagString: Untagged
@@ -3457,6 +3519,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b03223cdc348e34d90c4bad1d09db95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
+--- !u!58 &1319325570
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319325563}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 3.13
 --- !u!1 &1341922742
 GameObject:
   m_ObjectHideFlags: 0
@@ -5493,3 +5591,4 @@ SceneRoots:
   - {fileID: 1319325565}
   - {fileID: 1521254495}
   - {fileID: 168597226}
+  - {fileID: 751308946}

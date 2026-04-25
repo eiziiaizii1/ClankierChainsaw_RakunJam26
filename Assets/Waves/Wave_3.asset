@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AzizStuff.WaveDefinition
   entries:
   - enemyPrefab: {fileID: 4707958947098127198, guid: f2f7b74007538834e9cb3a7812fdd4bd, type: 3}
-    count: 3000
-    spawnsPerMinute: 200
+    count: 480
+    spawnsPerMinute: 240
+    groupSizeMin: 1
+    groupSizeMax: 40
+    angleSpreadDegrees: 45

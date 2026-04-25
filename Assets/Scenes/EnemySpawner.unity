@@ -207,7 +207,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -444,8 +444,8 @@ MonoBehaviour:
   waveCompletedChannel: {fileID: 11400000, guid: 13582e835704adb4c93cbced3627be65, type: 2}
   spawnRadius: 12
   radiusJitter: 0.5
-  defaultPoolCapacity: 32
-  maxPoolSize: 512
+  defaultPoolCapacity: 128
+  maxPoolSize: 1024
   poolParent: {fileID: 0}
 --- !u!4 &1656389193
 Transform:

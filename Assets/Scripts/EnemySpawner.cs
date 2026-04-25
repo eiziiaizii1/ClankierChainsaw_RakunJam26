@@ -12,7 +12,6 @@ namespace AzizStuff
         [Header("References")]
         [SerializeField] Transform target;
         [SerializeField] WaveSequenceSO sequence;
-        [SerializeField] WaveEventChannelSO waveCompletedChannel;
 
         [Header("Spawn Ring")]
         [Tooltip("Distance from target at which enemies spawn. Set just outside camera view.")]
@@ -47,11 +46,18 @@ namespace AzizStuff
                 if (wave == null || wave.entries == null) continue;
                 for (int e = 0; e < wave.entries.Length; e++)
                 {
-                    var prefab = wave.entries[e].enemyPrefab;
-                    if (prefab == null || _pools.ContainsKey(prefab)) continue;
-                    _pools[prefab] = CreatePool(prefab);
+                    var types = wave.entries[e].weightedTypes;
+                    if (types == null) continue;
+                    for (int t = 0; t < types.Length; t++)
+                        EnsurePool(types[t].prefab);
                 }
             }
+        }
+
+        void EnsurePool(GameObject prefab)
+        {
+            if (prefab == null || _pools.ContainsKey(prefab)) return;
+            _pools[prefab] = CreatePool(prefab);
         }
 
         IObjectPool<GameObject> CreatePool(GameObject prefab)
@@ -92,9 +98,6 @@ namespace AzizStuff
                 var wave = waves[waveIndex];
                 if (wave != null) yield return RunWave(wave);
 
-                if (waveCompletedChannel != null) waveCompletedChannel.Raise(waveIndex);
-                Debug.Log($"Wave {waveIndex + 1} complete. Upgrade event triggered.");
-
                 if (sequence.pauseBetweenWaves > 0f)
                     yield return new WaitForSeconds(sequence.pauseBetweenWaves);
 
@@ -110,7 +113,7 @@ namespace AzizStuff
             for (int i = 0; i < wave.entries.Length; i++)
             {
                 var entry = wave.entries[i];
-                if (entry.enemyPrefab == null || entry.count <= 0 || entry.spawnsPerMinute <= 0f) continue;
+                if (!HasAnyPrefab(entry) || entry.count <= 0 || entry.spawnsPerMinute <= 0f) continue;
                 running++;
                 StartCoroutine(SpawnEntry(entry, () => running--));
             }
@@ -122,27 +125,72 @@ namespace AzizStuff
         {
             float interval = 60f / entry.spawnsPerMinute;
             var wait = new WaitForSeconds(interval);
-            for (int i = 0; i < entry.count; i++)
+
+            int groupMin = Mathf.Max(1, entry.groupSizeMin);
+            int groupMax = Mathf.Max(groupMin, entry.groupSizeMax);
+            float halfSpreadRad = Mathf.Max(0f, entry.angleSpreadDegrees) * Mathf.Deg2Rad * 0.5f;
+
+            int remaining = entry.count;
+            while (remaining > 0)
             {
-                Spawn(entry.enemyPrefab);
-                if (i < entry.count - 1) yield return wait;
+                int groupSize = URandom.Range(groupMin, groupMax + 1);
+                if (groupSize > remaining) groupSize = remaining;
+
+                float centerAngle = URandom.value * Mathf.PI * 2f;
+                for (int i = 0; i < groupSize; i++)
+                {
+                    float offset = halfSpreadRad > 0f ? URandom.Range(-halfSpreadRad, halfSpreadRad) : 0f;
+                    var prefab = PickPrefab(entry);
+                    if (prefab != null) Spawn(prefab, centerAngle + offset);
+                }
+
+                remaining -= groupSize;
+                if (remaining > 0) yield return wait;
             }
+
             onComplete?.Invoke();
         }
 
-        void Spawn(GameObject prefab)
+        static bool HasAnyPrefab(WaveDefinition.EnemyEntry entry)
+        {
+            if (entry.weightedTypes == null) return false;
+            for (int i = 0; i < entry.weightedTypes.Length; i++)
+                if (entry.weightedTypes[i].prefab != null && entry.weightedTypes[i].weight > 0f) return true;
+            return false;
+        }
+
+        static GameObject PickPrefab(WaveDefinition.EnemyEntry entry)
+        {
+            var types = entry.weightedTypes;
+            if (types == null || types.Length == 0) return null;
+
+            float totalWeight = 0f;
+            for (int i = 0; i < types.Length; i++)
+                if (types[i].prefab != null && types[i].weight > 0f) totalWeight += types[i].weight;
+            if (totalWeight <= 0f) return null;
+
+            float pick = URandom.value * totalWeight;
+            for (int i = 0; i < types.Length; i++)
+            {
+                if (types[i].prefab == null || types[i].weight <= 0f) continue;
+                pick -= types[i].weight;
+                if (pick <= 0f) return types[i].prefab;
+            }
+            return null;
+        }
+
+        void Spawn(GameObject prefab, float angleRadians)
         {
             if (!_pools.TryGetValue(prefab, out var pool)) return;
             var enemy = pool.Get();
 
-            float angle = URandom.value * Mathf.PI * 2f;
             float r = radiusJitter > 0f
                 ? spawnRadius + URandom.Range(-radiusJitter, radiusJitter)
                 : spawnRadius;
 
             Vector3 center = target.position;
             enemy.transform.SetPositionAndRotation(
-                new Vector3(center.x + Mathf.Cos(angle) * r, center.y + Mathf.Sin(angle) * r, center.z),
+                new Vector3(center.x + Mathf.Cos(angleRadians) * r, center.y + Mathf.Sin(angleRadians) * r, center.z),
                 Quaternion.identity
             );
 

@@ -19,6 +19,10 @@ namespace AzizStuff
         [Tooltip("Seconds between attack ticks while in range.")]
         [Min(0.01f)] public float attackInterval = 1f;
 
+        [Tooltip("Child transform holding the visual / animator. Rotates to face the target each frame. " +
+                 "Sprite must be authored facing +Y (up). Leave null to disable facing.")]
+        [SerializeField] Transform visualRoot;
+
         Transform _target;
         Transform _tf;
         Collider2D _targetCollider;
@@ -79,6 +83,12 @@ namespace AzizStuff
                         _nextAttackTime = Time.time + attackInterval;
                     }
                     break;
+            }
+
+            if (visualRoot != null)
+            {
+                Vector2 dir = goal - (Vector2)pos;
+                if (dir.sqrMagnitude > 0.0001f) visualRoot.up = dir;
             }
         }
     }

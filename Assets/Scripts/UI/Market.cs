@@ -47,9 +47,9 @@ public class Market : MonoBehaviour
 
             switch (tier)
             {
-                case 1: sourceList = Tier1Upgrades; tierColor = tier1Color; break;
-                case 2: sourceList = Tier2Upgrades; tierColor = tier2Color; break;
-                case 3: sourceList = Tier3Upgrades; tierColor = tier3Color; break;
+                case 1: sourceList = Tier1Upgrades; tierColor = tier1Color; Tier1CostText.text = TierCosts[tier - 1].ToString(); break;
+                case 2: sourceList = Tier2Upgrades; tierColor = tier2Color; Tier2CostText.text = TierCosts[tier - 1].ToString(); break;
+                case 3: sourceList = Tier3Upgrades; tierColor = tier3Color; Tier3CostText.text = TierCosts[tier - 1].ToString(); break;
             }
 
             if (sourceList == null || sourceList.Count == 0)

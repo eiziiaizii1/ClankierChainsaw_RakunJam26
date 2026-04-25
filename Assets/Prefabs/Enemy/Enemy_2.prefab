@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -5502079945016668243}
   m_Layer: 0
   m_Name: Enemy_2
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,6 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e19275bc00289c40a4ffaf7a036ab3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AzizStuff.PooledEnemy
+  maxHp: 1
 --- !u!114 &2390237122203542342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119,7 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 346a7e3bb6e712644a35b5f93cf22489, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AzizStuff.EnemyMover
-  speed: 2.5
+  speed: 0.5
+  attackRange: 0.5
+  attackDamage: 2
+  attackInterval: 2
 --- !u!50 &6273736781487843841
 Rigidbody2D:
   serializedVersion: 5

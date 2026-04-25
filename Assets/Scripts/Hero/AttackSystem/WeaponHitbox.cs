@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using AzizStuff;
 
 [RequireComponent(typeof(Collider2D))]
 public class WeaponHitbox : MonoBehaviour
@@ -43,12 +44,9 @@ public class WeaponHitbox : MonoBehaviour
             if (!alreadyHitEnemies.Contains(collision))
             {
                 alreadyHitEnemies.Add(collision);
-                
-                // Try to get Enemy script and deal damage
-                // var enemy = collision.GetComponent<Enemy>();
-                // if (enemy != null) enemy.TakeDamage(currentDamage);
-                
-                Debug.Log($"Hit enemy {collision.name} for {currentDamage} damage!");
+
+                var dmg = collision.GetComponentInParent<IDamageable>();
+                if (dmg != null) dmg.TakeDamage(Mathf.RoundToInt(currentDamage));
             }
         }
     }

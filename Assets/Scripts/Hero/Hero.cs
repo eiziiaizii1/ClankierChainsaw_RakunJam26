@@ -1,7 +1,8 @@
 using UnityEngine;
+using AzizStuff;
 
 [RequireComponent(typeof(HeroStats))]
-public class Hero : MonoBehaviour
+public class Hero : MonoBehaviour, IDamageable
 {
     private int maxHealth;
     private int currentHealth;
@@ -19,9 +20,9 @@ public class Hero : MonoBehaviour
         currentHealth = maxHealth;
     }
 
-    public void GetDamage(float damage)
+    public void TakeDamage(int amount)
     {
-        currentHealth -= (int)damage;
+        currentHealth -= amount;
         CheckHealth();
     }
 

@@ -13,14 +13,13 @@ MonoBehaviour:
   m_Name: Wave_1
   m_EditorClassIdentifier: Assembly-CSharp::AzizStuff.WaveDefinition
   entries:
-  - enemyPrefab: {fileID: 0}
-    weightedTypes:
+  - weightedTypes:
     - prefab: {fileID: 4707958947098127198, guid: f2f7b74007538834e9cb3a7812fdd4bd, type: 3}
       weight: 8
     - prefab: {fileID: 4707958947098127198, guid: a0a7cf7278c62fc498134f1c49eff312, type: 3}
       weight: 2
-    count: 10
-    spawnsPerMinute: 10
+    count: 100
+    spawnsPerMinute: 25
     groupSizeMin: 1
-    groupSizeMax: 30
+    groupSizeMax: 10
     angleSpreadDegrees: 45

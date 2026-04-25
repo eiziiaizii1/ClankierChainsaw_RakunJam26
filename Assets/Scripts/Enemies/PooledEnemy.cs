@@ -9,6 +9,9 @@ namespace AzizStuff
         [Tooltip("Hit points the enemy spawns with. Decremented by TakeDamage; released to pool when <= 0.")]
         [SerializeField][Min(1)] int maxHp = 1;
 
+        [Tooltip("Money awarded to MoneyManager when this enemy dies. 0 = no reward.")]
+        [SerializeField][Min(0)] int killReward = 1;
+
         IObjectPool<GameObject> _pool;
         int _hp;
         bool _released;
@@ -21,7 +24,12 @@ namespace AzizStuff
         {
             if (_released) return;
             _hp -= amount;
-            if (_hp <= 0) ReleaseToPool();
+            if (_hp <= 0)
+            {
+                if (killReward > 0 && MoneyManager.Instance != null)
+                    MoneyManager.Instance.AddMoney(killReward);
+                ReleaseToPool();
+            }
         }
 
         public void ReleaseToPool()

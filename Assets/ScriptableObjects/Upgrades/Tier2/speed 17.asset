@@ -16,6 +16,7 @@ MonoBehaviour:
   Description: 'attack speed
 
     +15%'
+  Icon: {fileID: 21300000, guid: 6e342b6b2438bd640bd72371790321bb, type: 3}
   Tier: 2
   StatToUpgrade: 1
   Value: 0.15

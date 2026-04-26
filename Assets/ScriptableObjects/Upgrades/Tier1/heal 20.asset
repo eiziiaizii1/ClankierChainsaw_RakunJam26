@@ -16,6 +16,7 @@ MonoBehaviour:
   Description: 'heals you
 
     20'
+  Icon: {fileID: 21300000, guid: b3a0816f1839fe2458cee4734d1abe63, type: 3}
   Tier: 1
   StatToUpgrade: 4
   Value: 20

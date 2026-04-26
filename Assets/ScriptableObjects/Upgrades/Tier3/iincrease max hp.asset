@@ -16,6 +16,7 @@ MonoBehaviour:
   Description: 'Increase max health
 
     +100'
+  Icon: {fileID: 21300000, guid: 24bff0f7a5861a64aa35ffd1371d97d4, type: 3}
   Tier: 1
   StatToUpgrade: 3
   Value: 100

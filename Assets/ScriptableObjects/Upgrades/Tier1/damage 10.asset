@@ -16,6 +16,7 @@ MonoBehaviour:
   Description: 'damage
 
     +10%'
+  Icon: {fileID: -8828097952141051516, guid: a3b8662bd487bd844ba8cceb117ef49a, type: 3}
   Tier: 1
   StatToUpgrade: 0
   Value: 0.1

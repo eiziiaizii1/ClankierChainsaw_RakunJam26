@@ -37,6 +37,7 @@ public class WeaponController : MonoBehaviour
     {
         IsAttacking = true;
         
+        
         // Execute the custom logic inside the ScriptableObject
         yield return StartCoroutine(action.Execute(this, stats));
         

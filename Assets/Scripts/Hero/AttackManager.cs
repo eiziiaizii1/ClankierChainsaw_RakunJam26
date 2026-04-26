@@ -71,5 +71,9 @@ public class AttackManager : MonoBehaviour
             }
         
         weaponController.PerformAction(AvailableActions[attackID], hero.Stats);
+        if (hero != null)
+        {
+            hero.PlayTurnSound();
+        }
     }
 }

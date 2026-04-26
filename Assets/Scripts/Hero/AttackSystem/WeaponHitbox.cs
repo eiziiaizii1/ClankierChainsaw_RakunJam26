@@ -14,11 +14,14 @@ public class WeaponHitbox : MonoBehaviour
     // Tracks enemies already hit during the current swing.
     private HashSet<Collider2D> alreadyHitEnemies = new HashSet<Collider2D>();
 
+    private HeroStats heroStats;
+
     private void Awake()
     {
         col = GetComponent<Collider2D>();
         col.isTrigger = true;
         col.enabled = true;
+        heroStats = GetComponentInParent<HeroStats>();
     }
 
     public void EnableHitbox(float damage)
@@ -49,7 +52,12 @@ public class WeaponHitbox : MonoBehaviour
         }
         else if (passiveDamage > 0)
         {
-            dmg.TakeDamage(passiveDamage);
+            int scaledPassive = passiveDamage;
+            if (heroStats != null)
+            {
+                scaledPassive = Mathf.Max(1, Mathf.RoundToInt(passiveDamage * heroStats.DamageMultiplier));
+            }
+            dmg.TakeDamage(scaledPassive);
         }
     }
 }

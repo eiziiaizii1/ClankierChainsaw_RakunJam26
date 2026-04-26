@@ -165,8 +165,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AzizStuff.PooledEnemy
   maxHp: 20
   killReward: 1
-  hpBarRoot: {fileID: 6812239079693963369}
-  hpBarFill: {fileID: 6395463039457713691}
+  hpBarRoot: {fileID: 7914994833034643068}
+  hpBarFill: {fileID: 4702339811427408203}
 --- !u!114 &2390237122203542342
 MonoBehaviour:
   m_ObjectHideFlags: 0

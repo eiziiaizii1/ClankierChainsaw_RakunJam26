@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e19275bc00289c40a4ffaf7a036ab3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AzizStuff.PooledEnemy
-  maxHp: 1
+  maxHp: 10
   killReward: 1
 --- !u!114 &2390237122203542342
 MonoBehaviour:

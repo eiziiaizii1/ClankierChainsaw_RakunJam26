@@ -17,10 +17,17 @@ public class Hero : MonoBehaviour, IDamageable
 
     [HideInInspector] public bool IsInvincible = false;
 
+    [Header("Turn Audio")]
+    [SerializeField] private AudioClip[] turnSounds;
+    [Range(0f, 1f)]
+    [SerializeField] private float turnSoundProbability = 0.25f;
+    private AudioSource audioSource;
+
     private void Awake()
     {
         Stats = GetComponent<HeroStats>();
         Stats.OnMaxHealthChanged += HandleMaxHealthChanged;
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnDestroy()
@@ -81,5 +88,17 @@ public class Hero : MonoBehaviour, IDamageable
     public void RestartGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    public void PlayTurnSound()
+    {
+        if (turnSounds == null || turnSounds.Length == 0 || audioSource == null) return;
+
+        if (UnityEngine.Random.value <= turnSoundProbability)
+        {
+            AudioClip randomClip = turnSounds[UnityEngine.Random.Range(0, turnSounds.Length)];
+            audioSource.clip = randomClip;
+            audioSource.Play();
+        }
     }
 }

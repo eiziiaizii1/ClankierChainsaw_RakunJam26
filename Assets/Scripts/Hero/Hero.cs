@@ -1,5 +1,7 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using TMPro;
+using AzizStuff;
 
 [RequireComponent(typeof(HeroStats))]
 public class Hero : MonoBehaviour, IDamageable
@@ -9,6 +11,9 @@ public class Hero : MonoBehaviour, IDamageable
     public HeroStats Stats { get; private set; }
 
     [SerializeField] private TMP_Text healthText;
+    [SerializeField] private GameObject DeathPanel;
+    [SerializeField] private EnemySpawner enemySpawner;
+    private bool isDead = false;
 
     private void Awake()
     {
@@ -54,13 +59,23 @@ public class Hero : MonoBehaviour, IDamageable
     {
         if (healthText != null)
         {
-            healthText.text = $"{currentHealth} / {Stats.MaxHealth}";
+            healthText.text = $"{currentHealth}/{Stats.MaxHealth}";
         }
 
-        if (currentHealth <= 0)
+        if (currentHealth <= 0 && !isDead)
         {
-            Debug.Log("Hero is dead!");
-            // Time.timeScale = 0;
+            isDead = true;
+            DeathPanel.SetActive(true);
+            enemySpawner.enabled = false;
+            foreach (var enemy in FindObjectsOfType<EnemyMover>())
+            {
+                enemy.enabled = false;
+            }
         }
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }

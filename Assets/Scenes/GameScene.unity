@@ -2536,7 +2536,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AzizStuff.CameraZoom
   minSize: 3
-  maxSize: 10
+  maxSize: 8
   zoomStep: 0.5
   zoomSmoothing: 12
 --- !u!1 &1090433089

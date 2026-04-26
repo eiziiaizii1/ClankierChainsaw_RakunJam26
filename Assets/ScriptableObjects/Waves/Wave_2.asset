@@ -16,7 +16,7 @@ MonoBehaviour:
   - weightedTypes:
     - prefab: {fileID: 4707958947098127198, guid: f2f7b74007538834e9cb3a7812fdd4bd, type: 3}
       weight: 7
-    - prefab: {fileID: 4707958947098127198, guid: a0a7cf7278c62fc498134f1c49eff312, type: 3}
+    - prefab: {fileID: 4707958947098127198, guid: c54948c9181d2c747bbf0134ab176aea, type: 3}
       weight: 3
     count: 150
     spawnsPerMinute: 40

@@ -11,7 +11,7 @@ namespace AzizStuff
         [Min(0.1f)] public float minSize = 3f;
 
         [Tooltip("Orthographic size at full zoom-out. Larger = wider field of view.")]
-        [Min(0.1f)] public float maxSize = 10f;
+        [Min(0.1f)] public float maxSize = 8f;
 
         [Tooltip("Orthographic size change per scroll notch.")]
         [Min(0f)] public float zoomStep = 0.5f;

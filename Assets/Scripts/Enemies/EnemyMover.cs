@@ -39,6 +39,7 @@ namespace AzizStuff
         IDamageable _targetDamageable;
         Animator _animator;
         int _attackTriggerHash;
+        int _scaledDamage;
         State _state;
         float _nextAttackTime;
 
@@ -56,6 +57,7 @@ namespace AzizStuff
         {
             _state = State.Chase;
             _nextAttackTime = 0f;
+            _scaledDamage = attackDamage;
         }
 
         public void Init(Transform target)
@@ -63,6 +65,12 @@ namespace AzizStuff
             _target = target;
             _targetCollider = target != null ? target.GetComponentInChildren<Collider2D>() : null;
             _targetDamageable = target != null ? target.GetComponentInParent<IDamageable>() : null;
+        }
+
+        // Called by the spawner per-spawn so each new enemy hits harder as the wave list loops.
+        public void ApplyDifficulty(float damageMul)
+        {
+            _scaledDamage = Mathf.Max(0, Mathf.RoundToInt(attackDamage * damageMul));
         }
 
         void Update()
@@ -102,7 +110,7 @@ namespace AzizStuff
                     }
                     else if (Time.time >= _nextAttackTime)
                     {
-                        if (_targetDamageable != null) _targetDamageable.TakeDamage(attackDamage);
+                        if (_targetDamageable != null) _targetDamageable.TakeDamage(_scaledDamage);
                         if (_animator != null && _attackTriggerHash != 0) _animator.SetTrigger(_attackTriggerHash);
                         _nextAttackTime = Time.time + attackInterval;
                     }

@@ -24,8 +24,16 @@ namespace AzizStuff
         [SerializeField] int maxPoolSize = 512;
         [SerializeField] Transform poolParent;
 
+        [Header("Difficulty Scaling")]
+        [Tooltip("Per-loop additive bonus to enemy HP, attack damage, and kill reward. " +
+                 "0.25 = +25% on each stat each time the wave list loops back to wave 0. 0 disables scaling.")]
+        [Min(0f)][SerializeField] float difficultyPerLoop = 0.25f;
+
         readonly Dictionary<GameObject, IObjectPool<GameObject>> _pools =
             new Dictionary<GameObject, IObjectPool<GameObject>>();
+
+        int _loopCount;
+        float _difficultyMul = 1f;
 
         void Awake()
         {
@@ -91,7 +99,12 @@ namespace AzizStuff
 
                 if (waveIndex >= waves.Length)
                 {
-                    if (sequence.loop) waveIndex = 0;
+                    if (sequence.loop)
+                    {
+                        waveIndex = 0;
+                        _loopCount++;
+                        _difficultyMul = 1f + _loopCount * difficultyPerLoop;
+                    }
                     else yield break;
                 }
 
@@ -194,7 +207,15 @@ namespace AzizStuff
                 Quaternion.identity
             );
 
-            if (enemy.TryGetComponent<EnemyMover>(out var mover)) mover.Init(target);
+            // Difficulty has to be applied AFTER pool.Get() because OnEnable resets HP/damage
+            // to authoring values; ApplyDifficulty overwrites them with the scaled numbers.
+            if (enemy.TryGetComponent<PooledEnemy>(out var pooled))
+                pooled.ApplyDifficulty(_difficultyMul, _difficultyMul);
+            if (enemy.TryGetComponent<EnemyMover>(out var mover))
+            {
+                mover.ApplyDifficulty(_difficultyMul);
+                mover.Init(target);
+            }
         }
     }
 }

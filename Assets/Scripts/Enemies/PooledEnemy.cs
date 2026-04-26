@@ -14,11 +14,25 @@ namespace AzizStuff
 
         IObjectPool<GameObject> _pool;
         int _hp;
+        int _scaledReward;
         bool _released;
 
         public void Bind(IObjectPool<GameObject> pool) => _pool = pool;
 
-        void OnEnable() { _released = false; _hp = maxHp; }
+        void OnEnable()
+        {
+            _released = false;
+            _hp = maxHp;
+            _scaledReward = killReward;
+        }
+
+        // Called by the spawner right after pool.Get(). Applies per-spawn multipliers from
+        // wave-loop difficulty scaling. Defaults of 1 preserve authoring-time values.
+        public void ApplyDifficulty(float hpMul, float rewardMul)
+        {
+            _hp = Mathf.Max(1, Mathf.RoundToInt(maxHp * hpMul));
+            _scaledReward = Mathf.Max(0, Mathf.RoundToInt(killReward * rewardMul));
+        }
 
         public void TakeDamage(int amount)
         {
@@ -26,8 +40,8 @@ namespace AzizStuff
             _hp -= amount;
             if (_hp <= 0)
             {
-                if (killReward > 0 && MoneyManager.Instance != null)
-                    MoneyManager.Instance.AddMoney(killReward);
+                if (_scaledReward > 0 && MoneyManager.Instance != null)
+                    MoneyManager.Instance.AddMoney(_scaledReward);
                 ReleaseToPool();
             }
         }
